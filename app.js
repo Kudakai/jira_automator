@@ -11,6 +11,7 @@ app.use(express.json());
 app.get('/addtoconf', (req, res, next) => {
     console.log(`Request has been received`)
     console.log(req.body)
+    res.end()
 
 })
 

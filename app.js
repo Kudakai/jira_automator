@@ -8,9 +8,25 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/addtoconf', (req, res, next) => {
+app.post('/addtoconf', async (req, res, next) => {
     console.log(`Request has been received`)
     console.log({summary: req.body.fields.summary, description: req.body.fields.description})
+    const issueObject = {
+        summary: req.body.fields.summary, 
+        description: req.body.fields.description
+    }
+
+    const responseFromAi = await getAiSummary(issueObject)
+    const pageContent = await getPageContent()
+
+    const newContent = {
+        initiative: req.body.fields.summary,
+        summary: req.body.fields.description,
+        description: responseFromAi
+    };
+
+    const responseFromUpdate = await updatePageContent(5931009, newContent)
+    console.log("Script has been successfully ended")
     res.end()
 
 })
@@ -52,15 +68,11 @@ const claudeAPI = axios.create({
 });
 
 
-
-
 async function getIssueDetails(issueId) {
     const response = await jiraAPI.get(`/issue/${issueId}`);
     const data = response.data;
     return data;
 }
-
-
 
 
 async function getPageContent(pageId) {

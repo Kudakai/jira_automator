@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.post('/addtoconf', (req, res, next) => {
     console.log(`Request has been received`)
-    console.log(req.body)
+    console.log({summary: req.body.fields.summary, description: req.body.fields.description})
     res.end()
 
 })

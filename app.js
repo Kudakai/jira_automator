@@ -15,9 +15,12 @@ app.post('/addtoconf', async (req, res, next) => {
         summary: req.body.fields.summary, 
         description: req.body.fields.description
     }
+    console.log(issueObject)
 
     const responseFromAi = await getAiSummary(issueObject)
+    console.log(responseFromAi)
     const pageContent = await getPageContent()
+    
 
     const newContent = {
         initiative: req.body.fields.summary,
@@ -26,6 +29,7 @@ app.post('/addtoconf', async (req, res, next) => {
     };
 
     const responseFromUpdate = await updatePageContent(5931009, newContent)
+    console.log(responseFromUpdate)
     console.log("Script has been successfully ended")
     res.end()
 
